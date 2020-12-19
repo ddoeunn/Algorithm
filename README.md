@@ -19,3 +19,34 @@ for coin in coins:
 
 print(count)
 ```
+
+
+---
+# 2. Implementation
+* 구현 유형의 문제는 풀이를 떠올리는 것은 쉽지만 소스코드로 옮기기 어려운 문제를 지칭한다.
+* 시뮬레이션, 완전 탐색 유형과 비슷한 점이 많다.
+* 예제
+> 여행가 A는 1X1 크기의 정사각형으로 나누어져 있는 NxN 크기의 정사각형 공간 위에 서있다. 가장 왼쪽 위 좌표는 (1, 1)이며, 가장 오른쪽 아래 좌표는 (N, N)에 해당한다. A는 상/하/좌/우 방향으로 이동할 수 있으며, 시작 좌표는 항상 (1, 1)이다. 계획서에는 L(왼)/R(오른)/U(아래)/D(위) 문자가 적혀있으며 각 방향으로 한 칸씩 이동함을 의미한다. 이 때 NxN 크기의 정사각형 공간을 벗어나는 움직임은 무시된다. A가 최종적으로 도착할 지점의 좌표를 공백을 기준으로 구분하여 출력하라.
+
+```python
+N = int(input())
+plans = input().split()
+x, y = 1, 1
+
+# L, R, U, D 이동방향
+dx = [0, 0, -1, 1]
+dy = [-1, 1, 0, 0]
+move_types = ['L', 'R', 'U', 'D']
+
+for plan in plans:
+    for i in range(len(move_types)):
+        if plan == move_types[i]:
+            nx = x + dx[i]
+            ny = y + dy[i]
+    # 공간을 벗어나는 경우 무시
+    if nx < 1 or ny <1 or nx > N or ny > N:
+        continue
+    x, y = nx, ny
+
+print(x, y)
+```
