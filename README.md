@@ -1,5 +1,18 @@
 # Algorithm for Coding Test
 
+
+---
+## Contents
+* [Greedy Algorithm](https://github.com/ddoeunn/Algorithm#1-greedy-algorithm)
+* [Implementation](https://github.com/ddoeunn/Algorithm#2-implementation)
+* [Search Algorithm : DFS / BFS](https://github.com/ddoeunn/Algorithm#3-search-algorithm--dfs--bfs)
+  + [Data Structure : Stack / Queue](https://github.com/ddoeunn/Algorithm#data-structure--stack--queue)
+  + [Recursive Function](https://github.com/ddoeunn/Algorithm#recursive-function)
+  * [DFS](https://github.com/ddoeunn/Algorithm#31-dfs)
+  * [BFS](https://github.com/ddoeunn/Algorithm#32-bfs)
+
+
+
 ---
 # 1. Greedy Algorithm
 * 그리디 알고리즘(탐욕법)은 현재 상황에서 지금 당장 좋은 것만 고르는 방법이다.
@@ -157,10 +170,10 @@ print(gcd(192, 162))
 > 1. 탐색 시작 노드를 스택에 삽입하고 방문 처리를 한다.
 > 2. 스택의 최상단 노드에 방문하지 않은 인접한 노드가 하나라도 있으면 그 노드를 스택에 넣고 방문 처리한다. 방문하지 않은 인접 노드가 없으면 스택에서 최상단 노드를 꺼낸다.
 > 3. 더 이상 2번의 과정을 수행할 수 없을 때까지 반복한다.
-* 예제
+* 예제 (시작노드=1, 방문기준: 번호가 낮은 인접 노드부터)
 
 <p align="center">
-<img src="https://github.com/ddoeunn/Algorithm/blob/master/img/graph.png?raw=true" alt="graph"  width="350">
+<img src="https://github.com/ddoeunn/Algorithm/blob/master/img/graph.png?raw=true" alt="graph"  width="300">
 </p>
 
 
@@ -188,4 +201,53 @@ graph = [
 # 각 노드가 방문된 정보를 표현
 visited = [False] * 9
 dfs(graph, 1, visited) # 1, 2, 7, 6, 8, 3, 4, 5
+```
+
+---
+## 3.2 BFS
+* 너비 우선 탐색 (Breadth First Search)
+* 그래프에서 가까운 노드부터 우선적으로 탐색하는 알고리즘이다.
+* 큐를 이용하여 구현한다.
+> 1. 탐색 시작 노드를 큐에 삽입하고 방문 처리를 한다.
+> 2. 큐에서 노드를 꺼낸 뒤에 해당 노드의 인접 노드 중에서 방문하지 않은 노드를 모두 큐에 삽입하고 방문 처리를 한다.
+> 3. 더 이상 2번의 과정을 수행할 수 없을 때까지 반복한다.
+* 예제 (시작노드=1, 방문기준: 번호가 낮은 인접 노드부터)
+
+<p align="center">
+<img src="https://github.com/ddoeunn/Algorithm/blob/master/img/graph.png?raw=true" alt="graph"  width="300">
+</p>
+
+
+``` python
+from collections import deque
+
+def bfs(graph, start, visited):
+    queue = deque([start])
+    # 현재 노드를 방문 처리
+    visited[start] = True
+    # 큐가 빌 때까지 반복
+    while queue:
+        # 큐에서 하나의 원소를 뽑아 출력
+        v = queue.popleft()
+        print(v, end=' ')
+        # 아직 방문하지 않은 인접한 원소들을 큐에 삽입
+        for i in graph[v]:
+            if not visited[i]:
+                queue.append(i)
+                visited[i] = True
+
+graph = [
+    [],
+    [2, 3, 8],
+    [1, 7],
+    [1, 4, 5],
+    [3, 5],
+    [3, 4],
+    [7],
+    [2, 6, 8],
+    [1, 7]
+]
+# 각 노드가 방문된 정보를 표현
+visited = [False] * 9
+bfs(graph, 1, visited) # 1, 2, 3, 8, 7, 4, 5, 6
 ```
