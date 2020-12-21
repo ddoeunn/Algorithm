@@ -159,6 +159,11 @@ print(gcd(192, 162))
 > 3. 더 이상 2번의 과정을 수행할 수 없을 때까지 반복한다.
 * 예제
 
+<p align="center">
+<img src="https://github.com/ddoeunn/Algorithm/blob/master/img/graph.png?raw=true" alt="graph"  width="350">
+</p>
+
+
 ``` python
 def dfs(graph, v, visited):
     # 현재 노드를 방문 처리
