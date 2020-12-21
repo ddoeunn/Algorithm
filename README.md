@@ -44,9 +44,143 @@ for plan in plans:
             nx = x + dx[i]
             ny = y + dy[i]
     # 공간을 벗어나는 경우 무시
-    if nx < 1 or ny <1 or nx > N or ny > N:
+    if nx < 1 or ny < 1 or nx > N or ny > N:
         continue
     x, y = nx, ny
 
 print(x, y)
+```
+
+---
+# 3. Search Algorithm : DFS / BFS
+* 탐색(search)이란 많은 양의 데이터 중에서 원하는 데이터를 찾는 과정이다.
+* 대표적인 그래프 탐색 알고리즘으로는 DFS(Depth First Search; 깊이 우선 탐색)와 BFS(Breadth First Search; 너비 우선 탐색)가 있다.
+
+---
+## Data Structure : Stack / Queue
+* 스택 (Stack)
+  + 선입후출 : First In Last Out
+  + 먼저 들어 온 데이터가 나중에 나감
+  + 파이썬에서는 리스트를 사용하여 구현
+
+``` python
+stack = []
+
+# 삽입(5)-삽입(8)-삽입(3)-삭제()-삽입(7)-삽입(10)-삭제()
+stack.append(5)
+stack.append(8)
+stack.append(3)
+stack.pop()
+stack.append(7)
+stack.append(10)
+stack.pop()
+
+print(stack[::-1])  # 최상단 원소부터 출력 (7, 8, 5)
+print(stack)        # 최하단 원소부터 출력 (5, 8, 7)
+```
+
+* 큐 (Queue)
+  + 선입선출 : First In First Out
+  + 먼저 들어 온 데이터가 먼저 나감
+  + 파이썬에서는 deque 라이브러리를 사용하여 구현
+
+
+``` python
+from collections import deque
+
+queue = deque()
+
+# 삽입(5)-삽입(8)-삽입(3)-삭제()-삽입(7)-삽입(10)-삭제()
+queue.append(5)
+queue.append(8)
+queue.append(3)
+queue.popleft()
+queue.append(7)
+queue.append(10)
+queue.popleft()
+
+print(queue)    # 먼저 들어 온 순서대로 출력 (3, 7, 19)
+queue.reverse() # 역순으로 바꾸기
+print(queue)    # 나중에 들어 온 순서대로 출력 (10, 7, 3)
+```
+
+---
+## Recursive Function
+* 재귀함수(recursive function)란 자기 자신을 다시 호출하는 함수이다.
+* 재귀함수를 잘 활용하면 복잡한 알고리즘을 간결하게 작성할 수 있다.
+* 재귀함수를 사용할 때는 재귀함수 종료 조건을 반드시 명시해야 한다.
+  + 종료 조건을 제대로 명시하지 않으면 함수가 무한히 호출될 수 있다.
+* 모든 재귀함수는 반복문을 이용하여 동일한 기능을 구현할 수 있다.
+  + 재귀함수가 반복문보다 유리한 경우도 있고 불리한 경우도 있기 때문에 어떤 방법이 문제를 풀 때 더 유리한지 잘 파악해야 한다.
+
+``` python
+# Factorial n! = n * (n-1) * ... * 1
+def factorial_iterative(n):
+    result = 1
+    for i in range(1, n+1):
+        result *= i
+    return result
+
+def factorial_recursive(n):
+    if n <= 1:
+        return 1
+    return n * factorial_recursive(n-1)
+
+print(factorial_iterative(5)) # 120
+print(factorial_recursive(5)) # 120
+```
+
+
+* 컴퓨터가 함수를 연속적으로 호출하면 컴퓨터 메모리 내부의 스택 프레임에 쌓인다.
+  + 따라서 스택을 사용해야할 때 구현상 스택 라이브러리 대신에 재귀함수를 이용하는 경우가 많다.
+* 예제
+
+``` python
+# 유클리드 호제법
+# 두 자연수 A, B(A>B)에 대하여 A를 B로 나눈 나머지를 R이라고 하자.
+# 이 때 A와 B의 최대공약수는 B와 R의 최대공약수와 같다.
+
+def gcd(a, b):
+    if a % b == 0:
+        return b
+    else:
+        return gcd(b, a % b)
+
+print(gcd(192, 162))
+```
+
+---
+## 3.1 DFS
+* 깊이 우선 탐색 (Depth First Search)
+* 그래프에서 깊은 부분을 우선적으로 탐색하는 알고리즘이다.
+* 스택 또는 재귀함수를 이용하여 구현한다.
+> 1. 탐색 시작 노드를 스택에 삽입하고 방문 처리를 한다.
+> 2. 스택의 최상단 노드에 방문하지 않은 인접한 노드가 하나라도 있으면 그 노드를 스택에 넣고 방문 처리한다. 방문하지 않은 인접 노드가 없으면 스택에서 최상단 노드를 꺼낸다.
+> 3. 더 이상 2번의 과정을 수행할 수 없을 때까지 반복한다.
+* 예제
+
+``` python
+def dfs(graph, v, visited):
+    # 현재 노드를 방문 처리
+    visited[v] = True
+    print(v, end=' ')
+    # 현재 노드와 연결된 다른 노드를 재귀적으로 방문
+    for i in graph[v]:
+        if not visited[i]:
+            dfs(graph, i, visited)
+
+graph = [
+    [],
+    [2, 3, 8],
+    [1, 7],
+    [1, 4, 5],
+    [3, 5],
+    [3, 4],
+    [7],
+    [2, 6, 8],
+    [1, 7]
+]
+# 각 노드가 방문된 정보를 표현
+visited = [False] * 9
+dfs(graph, 1, visited) # 1, 2, 7, 6, 8, 3, 4, 5
 ```
