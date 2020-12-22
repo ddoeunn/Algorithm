@@ -10,8 +10,11 @@
   + [Recursive Function](https://github.com/ddoeunn/Algorithm#recursive-function)
   * [DFS](https://github.com/ddoeunn/Algorithm#31-dfs)
   * [BFS](https://github.com/ddoeunn/Algorithm#32-bfs)
-
-
+* [Sorting Algorithm]()
+  + [Selection Sort]()
+  + [Insert Sort]()
+  + []()
+  + []()
 
 ---
 # 1. Greedy Algorithm
@@ -250,4 +253,123 @@ graph = [
 # 각 노드가 방문된 정보를 표현
 visited = [False] * 9
 bfs(graph, 1, visited) # 1, 2, 3, 8, 7, 4, 5, 6
+```
+
+---
+# 4. Sorting Algorithm
+* 정렬(sorting)이란 데이터를 특정한 기준에 따라 순서대로 나열하는 것이다.
+* 일반적으로 문제 상황에 따라서 적절한 정렬 알고리즘이 공식처럼 사용된다.
+* 선택정렬 / 삽입정렬 / 퀵정렬
+
+---
+## 4.1 선택정렬
+* 처리되지 않은 데이터 중에서 가장 작은 데이터를 선택해 맨 앞에 있는 데이터와 바꾸는 것을 반복
+* 데이터 개수 N번 만큼 가장 작은 수를 찾아서 맨 앞으로 보내야 한다.
+  + 전체 연산 횟수 = N + (N-1) + ... + 2
+  + 시간복잡도 = O(N^2)
+
+``` python
+array = [7, 5, 9, 0, 3, 1, 6, 2, 4, 8]
+
+for i in range(len(array)):
+    min_idx = i
+    for j in range(i+1, len(array)):
+        if array[min_idx] > array[j]:
+            min_idx = j
+    array[i], array[min_idx] = array[min_idx], array[i]
+    print(array)
+
+    # [0, 5, 9, 7, 3, 1, 6, 2, 4, 8]
+    # [0, 1, 9, 7, 3, 5, 6, 2, 4, 8]
+    # [0, 1, 2, 7, 3, 5, 6, 9, 4, 8]
+    # [0, 1, 2, 3, 7, 5, 6, 9, 4, 8]
+    # [0, 1, 2, 3, 4, 5, 6, 9, 7, 8]
+    # [0, 1, 2, 3, 4, 5, 6, 9, 7, 8]
+    # [0, 1, 2, 3, 4, 5, 6, 9, 7, 8]
+    # [0, 1, 2, 3, 4, 5, 6, 7, 9, 8]
+    # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```  
+
+---
+## 4.2 삽입정렬
+* 처리되지 않은 데이터를 하나씩 골라 적절한 위치에 삽입하여 정렬
+* 현재 데이터가 거의 정렬되어 있는 상태라면 매우 빠르게 동작한다.
+* 선택정렬과 마찬가지로 반복문이 두 번 중첩되어 사용된다.
+  + 시간복잡도 = O(N^2)
+  + 최선의 경우 시간복잡도 = O(N)
+
+``` python
+array = [7, 5, 9, 0, 3, 1, 6, 2, 4, 8]
+
+for i in range(1, len(array)):
+    for j in range(i, 0, -1):
+        if array[j] < array[j-1]:
+            array[j], array[j-1] = array[j-1], array[j]
+        else:
+            break
+    print(array)
+
+    # [5, 7, 9, 0, 3, 1, 6, 2, 4, 8]
+    # [5, 7, 9, 0, 3, 1, 6, 2, 4, 8]
+    # [0, 5, 7, 9, 3, 1, 6, 2, 4, 8]
+    # [0, 3, 5, 7, 9, 1, 6, 2, 4, 8]
+    # [0, 1, 3, 5, 7, 9, 6, 2, 4, 8]
+    # [0, 1, 3, 5, 6, 7, 9, 2, 4, 8]
+    # [0, 1, 2, 3, 5, 6, 7, 9, 4, 8]
+    # [0, 1, 2, 3, 4, 5, 6, 7, 9, 8]
+    # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+---
+## 4.3 퀵정렬
+* 기준 데이터(pivot)를 설정하고 그 기준보다 큰 데이터와 작은 데이터의 위치를 바꾸는 방법
+* 가장 기본적인 퀵정렬은 첫 번째 데이터를 기준 데이터로 설정한다.
+* 병합정렬과 더불어 대부분의 프로그래밍 언어의 정렬 라이브러리의 근간이 되는 알고리즘이다.
+* 시간복잡도
+  + 평균적으로 O(NlogN)
+  + 최악의 경우 O(N^2)  
+  : 첫번째 원소를 피벗으로 삼을 때, 이미 정렬된 배열에 대해서 퀵 정렬을 수행하는 경우
+
+> 1. 왼쪽에서부터 피벗보다 큰 데이터를 선택하고 오른쪽에서부터 피벗보다 작은 데이터를 선택한 후 이 두 데이터의 위치를 서로 변경한다.
+> 2. 다시 피벗보다 큰 데이터와 작은 데이터를 각각 찾는다. 찾은 뒤에는 두 값의 위치를 서로 변경한다.
+> 3. 왼쪽에서부터 찾는 값과 오른쪽에서부터 찾는 값의 위치가 서로 엇갈릴 때까지 2를 반복한다.
+> 4. 두 값이 엇갈린 경우 작은 데이터와 피벗의 위치를 서로 변경한다. 피벗의 왼쪽에는 피벗보다 작은 데이터가 있고, 피벗의 오른쪽에는 피벗보다 큰 데이터가 있는 상태이다. 이 작업을 분할(Divide)이라고 한다.
+> 5. 왼쪽 리스트와 오른쪽 리스트에 대해서 1~4번을 수행하는 과정을 반복한다.
+
+<p align="center">
+<img src="https://github.com/ddoeunn/Algorithm/blob/master/img/quick sort.png?raw=true" alt="quick sort"  width="300">
+</p>
+
+
+
+``` python
+array = [5, 7, 9, 0, 3, 1, 6, 2, 4, 8]
+
+def quick_sort(array, start, end):
+    if start >= end: # 원소가 1개인 경우
+        return
+    pivot = start
+    left = start + 1
+    right = end
+    while left <= right:
+        # 피벗보다 큰 데이터를 찾을 때까지
+        while left <= end and array[left] <= array[pivot]:
+            left += 1
+        # 피멋보다 작은 데이터를 찾을 때까지
+        while right > start and array[right] >= array[pivot]:
+            right -= 1
+        # 엇갈렸다면 작은 데이터와 피벗을 교체
+        if left > right:
+            array[right], array[pivot] = array[pivot], array[right]
+        # 엇갈리지 않았다면 큰 데이터와 작은 데이터를 교체
+        else:
+            array[left], array[right] = array[right], array[left]
+
+    # 분할 이후 왼쪽 부분과 오른쪽 부분에서 각각 정렬 수행
+    quick_sort(array, start, right-1)
+    quick_sort(array, right+1, end)
+
+quick_sort(array, 0, len(array)-1)
+print(array)
 ```
