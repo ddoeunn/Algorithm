@@ -10,11 +10,11 @@
   + [Recursive Function](https://github.com/ddoeunn/Algorithm#recursive-function)
   * [DFS](https://github.com/ddoeunn/Algorithm#31-dfs)
   * [BFS](https://github.com/ddoeunn/Algorithm#32-bfs)
-* [Sorting Algorithm]()
-  + [Selection Sort]()
-  + [Insert Sort]()
-  + []()
-  + []()
+* [Sorting Algorithm](https://github.com/ddoeunn/Algorithm#4-sorting-algorithm)
+  + [Selection Sort](https://github.com/ddoeunn/Algorithm#41-%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC)
+  + [Insert Sort](https://github.com/ddoeunn/Algorithm#42-%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC)
+  + [Quick Sort](https://github.com/ddoeunn/Algorithm#43-%ED%80%B5%EC%A0%95%EB%A0%AC)
+
 
 ---
 # 1. Greedy Algorithm
@@ -338,7 +338,7 @@ for i in range(1, len(array)):
 > 5. 왼쪽 리스트와 오른쪽 리스트에 대해서 1~4번을 수행하는 과정을 반복한다.
 
 <p align="center">
-<img src="https://github.com/ddoeunn/Algorithm/blob/master/img/quick sort.png?raw=true" alt="quick sort"  width="300">
+<img src="https://github.com/ddoeunn/Algorithm/blob/master/img/quick sort.png?raw=true" alt="quick sort"  width="350">
 </p>
 
 
