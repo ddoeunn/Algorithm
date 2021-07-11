@@ -1,5 +1,5 @@
 # Algorithm for Coding Test
-
+코딩테스트를 위한 알고리즘 기본 내용들을 정리한 레파지토리입니다.
 
 ---
 ## Contents
